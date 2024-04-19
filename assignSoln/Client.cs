@@ -4,106 +4,109 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Client 
+namespace ClientAssign
 {
-    private string _firstname;
-    private string _lastname;
-    private int _weight;
-    private int _height;
-
-//Non-Greedy Constructor.
-    public Client()
+    public class Client
     {
-        _firstname= "XXXX";
-        _lastname = "YYYY";
-        _weight = 0;
-        _height = 0;
-    }
+        private string _firstname;
+        private string _lastname;
+        private int _weight;
+        private int _height;
 
-// Greedy Constructor.
-public Client(string FirstName, string LastName, int weight, int height)
-{
-    _firstname = FirstName;
-    _lastname = LastName;
-    _weight = Weight;
-    _height = Height;
-}
+        //Non-Greedy Constructor.
+        public Client()
+        {
+            _firstname = "XXXX";
+            _lastname = "YYYY";
+            _weight = 0;
+            _height = 0;
+        }
 
-//Fully Implemented Properties.
-public string FirstName
-{
-    get { return _firstname; }
-    set
-    {
-        if (string.IsNullOrWhiteSpace(value))
-             throw new ArgumentNullException("FirstName is required. Must Not be empty or blank.");
-        _firstname = value;
-    }
-}
+        // Greedy Constructor.
+        public Client(string FirstName, string LastName, int weight, int height)
+        {
+            _firstname = FirstName;
+            _lastname = LastName;
+            _weight = Weight;
+            _height = Height;
+        }
 
-public string LastName
-{
-    get{ return _lastname; }
-    set
-    {
-        if (string.IsNullOrWhiteSpace(value))
-             throw new ArgumentNullException("LastName is required. Must not be empty or blank. ");
-         _lastname = value;
-    }
-}
+        //Fully Implemented Properties.
+        public string FirstName
+        {
+            get { return _firstname; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentNullException("FirstName is required. Must Not be empty or blank.");
+                _firstname = value;
+            }
+        }
 
-public int Weight
-{
-    get { return _weight; }
-    set
-    {
-        if (value < 0)
-            throw new ArgumentException("Weight must be positive value and greater than zero.");
-        _weight = value;
-    }
-}
+        public string LastName
+        {
+            get { return _lastname; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentNullException("LastName is required. Must not be empty or blank. ");
+                _lastname = value;
+            }
+        }
 
-public int Height
-{
-    get { return _height; }
-    set
-    {
-        if (value < 0)
-            throw new ArgumentException("Height must be a positive value and greater than zero.");
-        _height = value;
-    }
-}
+        public int Weight
+        {
+            get { return _weight; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("Weight must be positive value and greater than zero.");
+                _weight = value;
+            }
+        }
 
-// Read only Fully Implemented Properties.
+        public int Height
+        {
+            get { return _height; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("Height must be a positive value and greater than zero.");
+                _height = value;
+            }
+        }
 
-public double BmiScore 
-{
-    get
-    {
-        return _weight / Math.Pow(_height, 2) * 703 ;
-    }
-} 
+        // Read only Fully Implemented Properties.
 
-public string BmiStatus
-{
-    get
-    {
-        double bmi = BmiScore;
-        if (bmi <= 18.4)
-            return "Underweight";
-        else if (bmi <= 24.9)
-                 return "Normal";
-        else if (bmi <= 39.9)
-                 return "Overweight";
-        else 
-             return "Obese";
+        public double BmiScore
+        {
+            get
+            {
+                return _weight / Math.Pow(_height, 2) * 703;
+            }
+        }
+
+        public string BmiStatus
+        {
+            get
+            {
+                double bmi = BmiScore;
+                if (bmi <= 18.4)
+                    return "Underweight";
+                else if (bmi <= 24.9)
+                    return "Normal";
+                else if (bmi <= 39.9)
+                    return "Overweight";
+                else
+                    return "Obese";
+            }
+        }
+        public string FullName
+        {
+            get
+            {
+                return $"{LastName}, {FirstName}";
+            }
+        }
     }
-}
-   public string FullName 
-   {
-    get
-    {
-        return $"{LastName}, {FirstName}";
-    }
-   } 
 }
