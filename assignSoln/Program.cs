@@ -1,14 +1,10 @@
-﻿using ClientAssign;
+﻿using System.IO.Compression;
+using ClientAssign;
 
 Client myClient = new();
 List<Client> listofClient = [];
 
 LoadFileValuesToMemory(listofClient);
-
-void LoadFileValuesToMemory(List<Client> listofClient)
-{
-    throw new NotImplementedException();
-}
 
 bool loopAgain = true;
 while (loopAgain)
@@ -113,75 +109,115 @@ string Prompt(string prompt)
     }
     return myString;
 }
-double PromptDoubleBetweenMinMax(String msg, double min, double max)
+double PromptIntBetweenMinMax(String msg, int min, int max)
 {
-	double num = 0;
-	while (true)
-	{
-		try
-		{
-			Console.Write($"{msg} between {min} and {max} inclusive: ");
-			num = double.Parse(Console.ReadLine());
-			if (num < min || num > max)
-				throw new Exception($"Must be between {min:n2} and {max:n2}");
-			break;
-		}
-		catch (Exception ex)
-		{
-			Console.WriteLine($"Invalid: {ex.Message}");
-		}
-	}
-	return num;
+    double num = 0;
+    while (true)
+    {
+        try
+        {
+            Console.Write($"{msg} between {min} and {max} inclusive: ");
+            num = double.Parse(Console.ReadLine());
+            if (num < min || num > max)
+                throw new Exception($"Must be between {min:n2} and {max:n2}");
+            break;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Invalid: {ex.Message}");
+        }
+    }
+    return num;
 }
 
-
-
-
-
-
-
-
-
-void GetHeight(Client myClient)
+Client NewClient()
 {
-    throw new NotImplementedException();
-}
-
-void GetWeight(Client myClient)
-{
-    throw new NotImplementedException();
-}
-
-void GetLastName(Client myClient)
-{
-    throw new NotImplementedException();
+    Client myclient = new();
+    GetFirstName(myclient);
+    GetLastName(myclient);
+    GetWeight(myclient);
+    GetHeight(myclient);
+    return myclient;
 }
 
 void GetFirstName(Client myClient)
 {
-    throw new NotImplementedException();
+    string myString = Prompt($"Enter First Name: ");
+    myClient.FirstName = myString;
 }
 
-void DisplayEditMenu()
+void GetLastName(Client myClient)
 {
-    throw new NotImplementedException();
+    string myString = Prompt($"Enter Last Name: ");
+    myClient.LastName = myString;
 }
 
-void DisplayMainMenu()
+void GetWeight(Client myClient)
 {
-    throw new NotImplementedException();
+    int myint = (int)PromptIntBetweenMinMax("Enter Weight in pounds: ", 0, 200);
+    myClient.Weight = myint;
 }
 
-
-
-Client NewClient()
+void GetHeight(Client myClient)
 {
-    throw new NotImplementedException();
+    int myint = (int)PromptIntBetweenMinMax("Enter Height in inches: ", 1, 200);
+    myClient.Height = myint;
 }
 
+void LoadFileValuesToMemory(List<Client> listofClient)
+{
+    while (true)
+    {
+        try
+        {
+            //string fileName = Prompt("Enter file name including .csv or .txt: ");
+            string fileName = "regin.csv";
+            string filePath = $"./data/{fileName}";
+            if (!File.Exists(filePath))
+                throw new Exception($"The file {fileName} does not exist.");
+            string[] csvFileInput = File.ReadAllLines(filePath);
+            for (int i = 0; i < csvFileInput.Length; i++)
+            {
+                //Console.WriteLine($"lineIndex: {i}; line: {csvFileInput[i]}");
+                string[] items = csvFileInput[i].Split(',');
+                for (int j = 0; j < items.Length; j++)
+                {
+                    //Console.WriteLine($"itemIndex: {j}; item: {items[j]}");
+                }
+                Client myclient = new(items[0], items[1], int.Parse(items[2]), int.Parse(items[3]));
+                listofClient.Add(myclient);
+            }
 
+            Console.WriteLine($"Load complete. {fileName}has {listofClient.Count} data entries");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message}");
+        }
+    }
+}
 
 void SaveMemoryValuesToFile(List<Client> listofClient)
 {
-    throw new NotImplementedException();
+    //string fileName = Prompt("Enter file name including .csv or .txt: ");
+    string fileName = "regout.csv";
+    string filePath = $"./data/{fileName}";
+    string[] csvLines = new string[listofClient.Count];
+    for (int i = 0; i < listofClient.Count; i++)
+    {
+        csvLines[i] = listofClient[i].ToString();
+    }
+    File.WriteAllLines(filePath, csvLines);
+    Console.WriteLine($"Save complete. {fileName} has {listofClient.Count} entries.");
 }
+
+
+
+
+
+
+
+
+
+
+
