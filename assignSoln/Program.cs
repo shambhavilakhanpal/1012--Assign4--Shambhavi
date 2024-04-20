@@ -1,4 +1,4 @@
-﻿using System.IO.Compression;
+﻿
 using ClientAssign;
 
 Client myClient = new();
