@@ -18,14 +18,14 @@ while (loopAgain)
         if (mainMenuChoice == "S")
             ShowClientInfo(myClient);
 
-        // if (mainMenuChoice == "A")
-        // 	AddPetToList(myPet, listOfPets);
-        // if (mainMenuChoice == "F")
-        // 	myPet = FindPetInList(listOfPets);
-        // if (mainMenuChoice == "R")
-        // 	RemovePetFromList(myPet, listOfPets);
-        // if (mainMenuChoice == "D")
-        // 	DisplayAllPetsInList(listOfPets);
+        if (mainMenuChoice == "A")
+            AddClientToList(myClient, listofClient);
+        if (mainMenuChoice == "F")
+            myClient = FindClientInList(listofClient);
+        if (mainMenuChoice == "R")
+            RemoveClientFromList(myClient, listofClient);
+        if (mainMenuChoice == "D")
+            DisplayAllClientInList(listofClient);
         if (mainMenuChoice == "Q")
         {
             SaveMemoryValuesToFile(listofClient);
@@ -57,16 +57,41 @@ while (loopAgain)
     }
 }
 
+void DisplayAllClientInList(List<Client> listofClient)
+{
+    foreach (Client client in listofClient)
+        ShowClientInfo(client);
+
+}
+
+
+void RemoveClientFromList(Client myClient, List<Client> listofClient)
+{
+    Console.WriteLine("Not Implemented Yet PartB");
+
+}
+
+Client FindClientInList(List<Client> listofClient)
+{
+    Console.WriteLine("Not Implemented Yet PartB");
+    return new Client();
+}
+
+void AddClientToList(Client myClient, List<Client> listofClient)
+{
+    listofClient.Add(myClient);
+}
+
 void DisplayMainMenu()
 {
     Console.WriteLine("\nMain Menu");
+    Console.WriteLine("D) Display List Of All Clients");
+    Console.WriteLine("F) Find Cleint");
     Console.WriteLine("N) New Client");
-    Console.WriteLine("S) Show Client BMI Info ");
     Console.WriteLine("E) Edit Client Info");
-    // Console.WriteLine("A) Add Pet To List PartB");
-    // Console.WriteLine("F) Find Pet In List PartB");
-    // Console.WriteLine("R) Remove Pet From List PartB");
-    // Console.WriteLine("D) Display all Pets in List PartB");
+    Console.WriteLine("R) Remove Client");
+    Console.WriteLine("A) Add Client ");
+    Console.WriteLine("S) Show Client BMI Info ");
     Console.WriteLine("Q) Quit");
 }
 
@@ -80,13 +105,13 @@ void DisplayEditMenu()
     Console.WriteLine("R) Return to Main Menu");
 }
 
-void ShowClientInfo(Client myclient)
+void ShowClientInfo(Client client)
 {
-    if (myclient == null)
+    if (client == null)
         throw new Exception($"No Client In memory");
-    Console.WriteLine($"\n{myclient.ToString()}");
-    Console.WriteLine($"Bmi Score required :\t{myclient.BmiScore:n4}");
-    Console.WriteLine($"bmi Status Required :\t{myclient.BmiStatus:n4}");
+    Console.WriteLine($"\n{client.ToString()}");
+    Console.WriteLine($"Bmi Score required :\t{client.BmiScore:n4}");
+    Console.WriteLine($"bmi Status Required :\t{client.BmiStatus:n4}");
 }
 
 string Prompt(string prompt)
@@ -140,28 +165,28 @@ Client NewClient()
     return myclient;
 }
 
-void GetFirstName(Client myClient)
+void GetFirstName(Client client)
 {
     string myString = Prompt($"Enter First Name: ");
-    myClient.FirstName = myString;
+    client.FirstName = myString;
 }
 
-void GetLastName(Client myClient)
+void GetLastName(Client client)
 {
     string myString = Prompt($"Enter Last Name: ");
-    myClient.LastName = myString;
+    client.LastName = myString;
 }
 
-void GetWeight(Client myClient)
+void GetWeight(Client client)
 {
     int myint = (int)PromptIntBetweenMinMax("Enter Weight in pounds: ", 0, 200);
-    myClient.Weight = myint;
+    client.Weight = myint;
 }
 
-void GetHeight(Client myClient)
+void GetHeight(Client client)
 {
     int myint = (int)PromptIntBetweenMinMax("Enter Height in inches: ", 1, 200);
-    myClient.Height = myint;
+    client.Height = myint;
 }
 
 void LoadFileValuesToMemory(List<Client> listofClient)
@@ -176,9 +201,10 @@ void LoadFileValuesToMemory(List<Client> listofClient)
             if (!File.Exists(filePath))
                 throw new Exception($"The file {fileName} does not exist.");
             string[] csvFileInput = File.ReadAllLines(filePath);
+
             for (int i = 0; i < csvFileInput.Length; i++)
             {
-                //Console.WriteLine($"lineIndex: {i}; line: {csvFileInput[i]}");
+                Console.WriteLine($"lineIndex: {i}; line: {csvFileInput[i]}");
                 string[] items = csvFileInput[i].Split(',');
                 for (int j = 0; j < items.Length; j++)
                 {

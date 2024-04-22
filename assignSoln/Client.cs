@@ -103,5 +103,17 @@ namespace ClientAssign
                 return $"{LastName}, {FirstName}";
             }
         }
+
+        public override string ToString()
+        {
+            return $"{LastName}, {FirstName}, {Weight}, {Height}";
+    
+        }
+
+        public string ToCsvString()
+        {
+            return $"{FirstName}, {LastName},{Weight}, {Height} ";
+        }
     }
+
 }
