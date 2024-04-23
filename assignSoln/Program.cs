@@ -191,35 +191,35 @@ void GetHeight(Client client)
 
 void LoadFileValuesToMemory(List<Client> listofClient)
 {
-    while (true)
+    try
     {
-        try
-        {
-            //string fileName = Prompt("Enter file name including .csv or .txt: ");
-            string fileName = "regin.csv";
-            string filePath = $"./data/{fileName}";
-            if (!File.Exists(filePath))
-                throw new Exception($"The file {fileName} does not exist.");
-            string[] csvFileInput = File.ReadAllLines(filePath);
+        //string fileName = Prompt("Enter file name including .csv or .txt: ");
+        string fileName = "regin.csv";
+        string filePath = $"./data/{fileName}";
+        if (!File.Exists(filePath))
+            throw new Exception($"The file {fileName} does not exist.");
 
-            for (int i = 0; i < csvFileInput.Length; i++)
+        string[] csvFileInput = File.ReadAllLines(filePath);
+
+        foreach (string line in csvFileInput)
+        {
+            string[] items = line.Split(',');
+            if (items.Length != 4)
             {
-                Console.WriteLine($"lineIndex: {i}; line: {csvFileInput[i]}");
-                string[] items = csvFileInput[i].Split(',');
-                for (int j = 0; j < items.Length; j++)
-                {
-                    //Console.WriteLine($"itemIndex: {j}; item: {items[j]}");
-                }
-                Client myclient = new(items[0], items[1], int.Parse(items[2]), int.Parse(items[3]));
-                listofClient.Add(myclient);
+                Console.WriteLine($"Invalid data format in CSV file. Skipping line: {line}");
+                continue;
             }
 
-            Console.WriteLine($"Load complete. {fileName}has {listofClient.Count} data entries");
+            Client myclient = new(items[0], items[1], int.Parse(items[2]), int.Parse(items[3]));
+            listofClient.Add(myclient);
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"{ex.Message}");
-        }
+
+        Console.WriteLine($"Load complete. {fileName} has {listofClient.Count} data entries");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error while loading file: {ex.Message}");
+       
     }
 }
 
