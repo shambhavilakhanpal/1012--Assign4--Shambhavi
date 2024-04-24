@@ -57,30 +57,7 @@ while (loopAgain)
     }
 }
 
-void DisplayAllClientInList(List<Client> listofClient)
-{
-    foreach (Client client in listofClient)
-        ShowClientInfo(client);
 
-}
-
-
-void RemoveClientFromList(Client myClient, List<Client> listofClient)
-{
-    Console.WriteLine("Not Implemented Yet PartB");
-
-}
-
-Client FindClientInList(List<Client> listofClient)
-{
-    Console.WriteLine("Not Implemented Yet PartB");
-    return new Client();
-}
-
-void AddClientToList(Client myClient, List<Client> listofClient)
-{
-    listofClient.Add(myClient);
-}
 
 void DisplayMainMenu()
 {
@@ -193,8 +170,7 @@ void LoadFileValuesToMemory(List<Client> listofClient)
 {
     try
     {
-        //string fileName = Prompt("Enter file name including .csv or .txt: ");
-        string fileName = "regin.csv";
+        string fileName = Prompt("Enter file name including .csv or .txt: ");
         string filePath = $"./data/{fileName}";
         if (!File.Exists(filePath))
             throw new Exception($"The file {fileName} does not exist.");
@@ -219,30 +195,90 @@ void LoadFileValuesToMemory(List<Client> listofClient)
     catch (Exception ex)
     {
         Console.WriteLine($"Error while loading file: {ex.Message}");
-       
+
     }
 }
+
+// void SaveMemoryValuesToFile(List<Client> listofClient)
+// {
+//     string fileName = Prompt("Enter file name including .csv or .txt: ");
+//     string fileName = "regout.csv";
+//     string filePath = $"./data/{fileName}";
+//     string[] csvLines = new string[listofClient.Count];
+//     for (int i = 0; i < listofClient.Count; i++)
+//     {
+//         csvLines[i] = listofClient[i].ToString();
+//     }
+//     File.WriteAllLines(filePath, csvLines);
+//     Console.WriteLine($"Save complete. {fileName} has {listofClient.Count} entries.");
+// }
+
+void DisplayAllClientInList(List<Client> listofClient)
+{
+    foreach (Client client in listofClient)
+        ShowClientInfo(client);
+
+}
+
+
+void RemoveClientFromList(Client myClient, List<Client> listofClient)
+{
+    if (myClient == null)
+    {
+        Console.WriteLine("No client selected for removal");
+        return;
+    }
+
+    listofClient.Remove(myClient);
+    Console.WriteLine("Client removed from the list");
+
+}
+
+Client FindClientInList(List<Client> listofClient)
+{
+    string searchTerm = Prompt("Enter the clients's last name to search");
+
+    foreach (Client client in listofClient)
+    {
+        if (client.LastName == searchTerm)
+        {
+            return client;
+        }
+    }
+    return null;
+}
+
+void AddClientToList(Client myClient, List<Client> listofClient)
+{
+    listofClient.Add(myClient);
+    Console.WriteLine("Client Added to the list.");
+}
+
+
+
+
 
 void SaveMemoryValuesToFile(List<Client> listofClient)
 {
-    //string fileName = Prompt("Enter file name including .csv or .txt: ");
-    string fileName = "regout.csv";
+    string fileName = Prompt("Enter file name including .csv or .txt: ");
     string filePath = $"./data/{fileName}";
-    string[] csvLines = new string[listofClient.Count];
-    for (int i = 0; i < listofClient.Count; i++)
+
+    try
     {
-        csvLines[i] = listofClient[i].ToString();
+        List<string> lines = new List<string>();
+        foreach (Client client in listofClient)
+        {
+            lines.Add(client.ToString());
+        }
+        File.WriteAllLines(filePath, lines);
+
+        Console.WriteLine($"Save complete. {fileName} has {listofClient.Count} entries.");
     }
-    File.WriteAllLines(filePath, csvLines);
-    Console.WriteLine($"Save complete. {fileName} has {listofClient.Count} entries.");
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error while saving to file: {ex.Message}");
+    }
 }
-
-
-
-
-
-
-
 
 
 
