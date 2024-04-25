@@ -222,7 +222,7 @@ void RemoveClientFromList(Client myClient, List<Client> listofClient)
 
 Client FindClientInList(List<Client> listofClient)
 {
-    string searchTerm = Prompt("Enter the clients's last name to search");
+    string searchTerm = Prompt("Enter the clients's last name to search: ");
 
     foreach (Client client in listofClient)
     {
@@ -246,7 +246,7 @@ void AddClientToList(Client myClient, List<Client> listofClient)
 
 void SaveMemoryValuesToFile(List<Client> listofClient)
 {
-    string fileName = Prompt("Enter file name including .csv or .txt: ");
+    string fileName = "regout.csv";
     string filePath = $"./data/{fileName}";
 
     try

@@ -13,8 +13,8 @@ namespace ClientAssign
         {
             _firstname = "XXXX";
             _lastname = "YYYY";
-            _weight = 0;
-            _height = 0;
+            _weight = '0';
+            _height = '0';
         }
 
         // Greedy Constructor.
