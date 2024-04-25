@@ -166,52 +166,38 @@ void GetHeight(Client client)
     client.Height = myint;
 }
 
-void LoadFileValuesToMemory(List<Client> listofClient)
+void LoadFileValuesToMemory(List<Client> listOfPets)
 {
-    try
+    while (true)
     {
-        string fileName = Prompt("Enter file name including .csv or .txt: ");
-        string filePath = $"./data/{fileName}";
-        if (!File.Exists(filePath))
-            throw new Exception($"The file {fileName} does not exist.");
-
-        string[] csvFileInput = File.ReadAllLines(filePath);
-
-        foreach (string line in csvFileInput)
+        try
         {
-            string[] items = line.Split(',');
-            if (items.Length != 4)
+            string fileName = Prompt("Enter file name including .csv or .txt: ");
+            string filePath = $"./data/{fileName}";
+            if (!File.Exists(filePath))
+                throw new Exception($"The file {fileName} does not exist.");
+            string[] csvFileInput = File.ReadAllLines(filePath);
+            for (int i = 0; i < csvFileInput.Length; i++)
             {
-                Console.WriteLine($"Invalid data format in CSV file. Skipping line: {line}");
-                continue;
+                Console.WriteLine($"lineIndex: {i}; line: {csvFileInput[i]}");
+                string[] items = csvFileInput[i].Split(',');
+                for (int j = 0; j < items.Length; j++)
+                {
+                    Console.WriteLine($"itemIndex: {j}; item: {items[j]}");
+                }
+                Client myClient = new(items[0], items[1], int.Parse(items[2]), int.Parse(items[3]));
+                listOfPets.Add(myClient);
             }
-
-            Client myclient = new(items[0], items[1], int.Parse(items[2]), int.Parse(items[3]));
-            listofClient.Add(myclient);
+            Console.WriteLine($"Load complete. {fileName} has {listofClient.Count} data entries");
+            break;
         }
-
-        Console.WriteLine($"Load complete. {fileName} has {listofClient.Count} data entries");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error while loading file: {ex.Message}");
-
+        catch (Exception ex)
+        {
+            Console.WriteLine($"{ex.Message}");
+        }
     }
 }
 
-// void SaveMemoryValuesToFile(List<Client> listofClient)
-// {
-//     string fileName = Prompt("Enter file name including .csv or .txt: ");
-//     string fileName = "regout.csv";
-//     string filePath = $"./data/{fileName}";
-//     string[] csvLines = new string[listofClient.Count];
-//     for (int i = 0; i < listofClient.Count; i++)
-//     {
-//         csvLines[i] = listofClient[i].ToString();
-//     }
-//     File.WriteAllLines(filePath, csvLines);
-//     Console.WriteLine($"Save complete. {fileName} has {listofClient.Count} entries.");
-// }
 
 void DisplayAllClientInList(List<Client> listofClient)
 {
