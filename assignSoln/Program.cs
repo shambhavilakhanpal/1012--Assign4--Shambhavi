@@ -82,13 +82,13 @@ void DisplayEditMenu()
     Console.WriteLine("R) Return to Main Menu");
 }
 
-void ShowClientInfo(Client client)
+void ShowClientInfo(Client myclient)
 {
-    if (client == null)
+    if (myclient == null)
         throw new Exception($"No Client In memory");
-    Console.WriteLine($"\n{client.ToString()}");
-    Console.WriteLine($"Bmi Score required :\t{client.BmiScore:n4}");
-    Console.WriteLine($"bmi Status Required :\t{client.BmiStatus:n4}");
+    Console.WriteLine($"\n{myclient.ToString()}");
+    Console.WriteLine($"Bmi Score required :\t{myclient.BmiScore:n4}");
+    Console.WriteLine($"bmi Status Required :\t{myclient.BmiStatus:n4}");
 }
 
 string Prompt(string prompt)
@@ -201,8 +201,8 @@ void LoadFileValuesToMemory(List<Client> listOfPets)
 
 void DisplayAllClientInList(List<Client> listofClient)
 {
-    foreach (Client client in listofClient)
-        ShowClientInfo(client);
+    foreach (Client myclient in listofClient)
+        ShowClientInfo(myclient);
 
 }
 

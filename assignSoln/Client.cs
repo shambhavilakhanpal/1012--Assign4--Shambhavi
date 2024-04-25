@@ -22,8 +22,8 @@ namespace ClientAssign
         {
             _firstname = FirstName;
             _lastname = LastName;
-            _weight = Weight;
-            _height = Height;
+            _weight = weight;
+            _height = height;
         }
 
         //Fully Implemented Properties.
@@ -77,7 +77,8 @@ namespace ClientAssign
         {
             get
             {
-                return _weight / Math.Pow(_height, 2) * 703;
+                double BmiScore = Weight / Math.Pow(Height, 2) * 703;
+                return BmiScore;
             }
         }
 
@@ -85,15 +86,16 @@ namespace ClientAssign
         {
             get
             {
-                double bmi = BmiScore;
-                if (bmi <= 18.4)
-                    return "Underweight";
-                else if (bmi <= 24.9)
-                    return "Normal";
-                else if (bmi <= 39.9)
-                    return "Overweight";
+                string BmiStatus = "";
+                if (BmiScore <= 18.4)
+                    BmiStatus = "Underweight";
+                else if (BmiScore <= 24.9)
+                    BmiStatus= "Normal";
+                else if (BmiScore >= 39.9)
+                    BmiStatus= "Overweight";
                 else
-                    return "Obese";
+                    BmiStatus= "Obese";
+                return BmiStatus;
             }
         }
         public string FullName
